@@ -1,0 +1,57 @@
+version: '3'
+services:
+  node:
+    build:
+      dockerfile: ./backend/Dockerfile
+    container_name: library-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/usr/src/app
+    networks:
+      - network-lib
+    depends_on:
+      - mysql
+
+  react:
+    build:
+      dockerfile: ./frontend/Dockerfile
+    container_name: library-frontend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./frontend:/usr/src/app
+    networks:
+      - network-lib
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3307:3306" 
+    volumes:
+      - mysqldb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "library"
+      MYSQL_ROOT_HOST: "%"
+    networks:
+      - network-lib
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_ARBITRARY: "1"
+    ports:
+      - "8080:80"
+    networks:
+      - network-lib
+
+networks:
+  network-lib:
+    driver: bridge
+
+volumes:
+  mysqldb:
