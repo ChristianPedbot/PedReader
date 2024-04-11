@@ -1,30 +1,16 @@
 const express = require('express');
 const router = express.Router();
-
-router.get('/books/:id', (req, res) => {
-  const livroId = req.params.id;
-  res.send(`Detalhes do livro com o ID ${livroId}`);
-});
+const bookController = require('../controllers/books');
 
 
-router.put('/books/edit/:id', (req, res) => {
-  const livroId = req.params.id;
-  res.send(`Atualizar detalhes do livro com o ID ${livroId}`);
-});
+router.get('/books/:id', bookController.viewBook);
 
+router.put('/books/edit/:id', bookController.editBook);
 
-router.delete('/books/delete/:id', (req, res) => {
-  const livroId = req.params.id;
-  res.send(`Excluir o livro com o ID ${livroId}`);
-});
+router.delete('/books/delete/:id', bookController.deleteBook);
 
-router.get('/books', (req, res) => {
-  res.send('Listar todos os livros');
-});
+router.get('/books', bookController.books);
 
-
-router.post('/books/add', (req, res) => {
-  res.send('Criar um novo livro');
-});
+router.post('/books/add', bookController.addBook);
 
 module.exports = router;

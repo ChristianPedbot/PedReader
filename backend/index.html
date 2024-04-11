@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Adicionar Livro</title>
+</head>
+<body>
+    <h1>Adicionar Livro</h1>
+    <form id="addBookForm" method="POST" action="/books/add" enctype="multipart/form-data">
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="description">Descrição:</label>
+        <textarea id="description" name="description" required></textarea><br><br>
+
+        <label for="availability">Disponibilidade:</label>
+        <select id="availability" name="availability">
+            <option value="1">Disponível</option>
+            <option value="0">Indisponível</option>
+        </select><br><br>
+
+        <label for="date">Data:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="categorie_id">ID da Categoria:</label>
+        <input type="number" id="categorie_id" name="categorie_id" required><br><br>
+
+        <label for="author_id">ID do Autor:</label>
+        <input type="number" id="author_id" name="author_id" required><br><br>
+
+        <label for="img">Imagem:</label>
+        <input type="file" id="img" name="img" accept="image/*"><br><br>
+
+        <button type="submit">Adicionar Livro</button>
+    </form>
+
+</body>
+</html>
