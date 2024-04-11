@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const fileupload = require('express-fileupload');
 const cors = require('cors');
-require('dotenv').config(); // Carrega as variáveis de ambiente do arquivo .env
+require('dotenv').config(); 
 
 
 const app = express();

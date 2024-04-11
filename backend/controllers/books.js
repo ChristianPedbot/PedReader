@@ -32,7 +32,6 @@ module.exports.addBook = (req, res) => {
         
         const { title, description, availability, date, categorie_id, author_id } = req.body;
 
-        // Obtém a URL da imagem do Cloudinary a partir do req.file.path
         const img = req.file.path;
 
         connection.query(
@@ -44,7 +43,6 @@ module.exports.addBook = (req, res) => {
                     return res.status(500).send('Erro ao criar o livro');
                 }
 
-                // Se não houver erro, o livro foi adicionado com sucesso
                 return res.send('Livro adicionado com sucesso');
             }
         );
