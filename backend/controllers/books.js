@@ -1,22 +1,46 @@
 const connection = require('../utils/db');
 
-module.exports.viewBook = (req, res) => {
-    const livroId = req.params.id;
-    res.send(`Detalhes do livro com o ID ${livroId}`);
-}
-
 module.exports.editBook = (req, res) => {
     const livroId = req.params.id;
-    res.send(`Atualizar detalhes do livro com o ID ${livroId}`);
+    const { title, description, availability, date, categorie_id, author_id } = req.body;
+
+    connection.query(
+        'UPDATE books SET title = ?, description = ?, availability = ?, date = ?, categorie_id = ?, author_id = ? WHERE id = ?',
+        [title, description, availability, date, categorie_id, author_id, livroId],
+        (error) => {
+            if (error) {
+                console.error('Erro ao editar o livro:', error);
+            }
+            
+            return res.send('Livro editado com sucesso');
+        }
+    );
 }
 
 module.exports.deleteBook = (req, res) => {
     const livroId = req.params.id;
-    res.send(`Excluir o livro com o ID ${livroId}`);
+
+    connection.query(
+        'DELETE FROM books WHERE id = ?',
+        [livroId],
+        (error) => {
+            if (error) {
+                console.error('Erro ao excluir o livro:', error);
+            }
+            
+            return res.send(`Livro com o ID ${livroId} excluído com sucesso`);
+        }
+    );
 }
 
 module.exports.books = (req, res) => {
-    res.send('Listar todos os livros');
+    connection.query('SELECT * FROM books', (error, results) => {
+        if (error) {
+            console.error('Erro ao listar os livros:', error);
+        }
+        console.log(results);
+        res.json(results);
+    });
 }
 
 const multer = require('multer');
@@ -27,20 +51,22 @@ module.exports.addBook = (req, res) => {
     upload.single('img')(req, res, (err) => {
         if (err) {
             console.error('Erro ao fazer upload da imagem:', err);
-            return res.status(500).send('Erro ao fazer upload da imagem');
         }
         
         const { title, description, availability, date, categorie_id, author_id } = req.body;
 
+        if (!req.file || !req.file.path) {
+            console.error('Nenhuma imagem foi enviada');
+        }
+        
         const img = req.file.path;
 
         connection.query(
             'INSERT INTO books (title, description, availability, date, categorie_id, author_id, img) VALUES (?, ?, ?, ?, ?, ?, ?)',
             [title, description, availability, date, categorie_id, author_id, img],
-            (error, booksResults) => {
+            (error) => {
                 if (error) {
                     console.error('Erro ao inserir o livro no banco de dados:', error);
-                    return res.status(500).send('Erro ao criar o livro');
                 }
 
                 return res.send('Livro adicionado com sucesso');
