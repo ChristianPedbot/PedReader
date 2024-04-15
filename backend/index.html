@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Adicionar Livro</title>
+    <title>Testar Backend</title>
 </head>
 <body>
-    <h1>Adicionar Livro</h1>
+    <h1>Testar Backend</h1>
+
+    <h2>Adicionar Livro</h2>
     <form id="addBookForm" method="POST" action="/books/add" enctype="multipart/form-data">
         <label for="title">Título:</label>
         <input type="text" id="title" name="title" required><br><br>
@@ -29,11 +31,87 @@
         <label for="author_id">ID do Autor:</label>
         <input type="number" id="author_id" name="author_id" required><br><br>
 
-        <label for="img">Imagem:</label>
+        <label for="img">Escolher Imagem:</label>
         <input type="file" id="img" name="img" accept="image/*"><br><br>
 
         <button type="submit">Adicionar Livro</button>
     </form>
 
+    <h2>Listar Livros</h2>
+    <ul id="bookList"></ul>
+
+    <script>
+        // Função para carregar a lista de livros
+        function loadBooks() {
+            fetch('/books')
+                .then(response => response.json())
+                .then(books => {
+                    const bookList = document.getElementById('bookList');
+                    bookList.innerHTML = ''; // Limpar a lista antes de atualizar
+                    books.forEach(book => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <div>${book.title} - ${book.description}</div>
+                            <div>
+                                <button onclick="editBook(${book.id})">Editar</button>
+                                <button onclick="deleteBook(${book.id})">Excluir</button>
+                            </div>
+                        `;
+                        bookList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter lista de livros:', error));
+        }
+
+
+        function editBook(bookId) {
+            const newTitle = prompt('Novo título:');
+            if (newTitle !== null && newTitle !== '') {
+                const newDescription = prompt('Nova descrição:');
+                if (newDescription !== null && newDescription !== '') {
+                    fetch(`/books/edit/${bookId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            title: newTitle,
+                            description: newDescription
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Livro editado com sucesso!');
+                            loadBooks();
+                        } else {
+                            throw new Error('Erro ao editar o livro');
+                        }
+                    })
+                    .catch(error => console.error('Erro ao editar o livro:', error));
+                }
+            }
+        }
+
+
+        function deleteBook(bookId) {
+            const confirmation = confirm('Tem certeza que deseja excluir este livro?');
+            if (confirmation) {
+                fetch(`/books/delete/${bookId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Livro excluído com sucesso!');
+                        loadBooks();
+                    } else {
+                        throw new Error('Erro ao excluir o livro');
+                    }
+                })
+                .catch(error => console.error('Erro ao excluir o livro:', error));
+            }
+        }
+
+        loadBooks();
+    </script>
 </body>
 </html>
