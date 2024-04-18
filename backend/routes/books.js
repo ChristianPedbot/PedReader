@@ -10,6 +10,8 @@ router.delete('/books/delete/:id', bookController.deleteBook);
 
 router.get('/books', bookController.books);
 
+router.get('/book/:id', bookController.getBookById);
+
 router.post('/books/add', bookController.addBook);
 
 module.exports = router;

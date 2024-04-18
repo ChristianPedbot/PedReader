@@ -39,6 +39,8 @@
 
     <h2>Listar Livros</h2>
     <ul id="bookList"></ul>
+    <h2>Autores</h2>
+    <ul id=""></ul>
 
     <script>
         // Função para carregar a lista de livros
@@ -55,6 +57,28 @@
                             <div>
                                 <button onclick="editBook(${book.id})">Editar</button>
                                 <button onclick="deleteBook(${book.id})">Excluir</button>
+                            </div>
+                        `;
+                        bookList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter lista de livros:', error));
+        }
+
+
+        function loadAuthors() {
+            fetch('/authors')
+                .then(response => response.json())
+                .then(authors => {
+                    const authorList = document.getElementById('authorList');
+                    authorList.innerHTML = ''; // Limpar a lista antes de atualizar
+                    authors.forEach(author => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <div>${author.title} - ${author.biography}</div>
+                            <div>
+                                <button onclick="editauthor(${author.id})">Editar</button>
+                                <button onclick="deleteauthor(${author.id})">Excluir</button>
                             </div>
                         `;
                         bookList.appendChild(listItem);

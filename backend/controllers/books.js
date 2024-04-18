@@ -38,10 +38,30 @@ module.exports.books = (req, res) => {
         if (error) {
             console.error('Erro ao listar os livros:', error);
         }
-        console.log(results);
         res.json(results);
     });
 }
+
+module.exports.getBookById = (req, res) => {
+    const livroId = req.params.id;
+
+    connection.query(
+        'SELECT * FROM books WHERE id = ?',
+        [livroId],
+        (error, results) => {
+            if (error) {
+                console.error('Erro ao buscar o livro:', error);
+                return res.status(500).json({ error: 'Erro ao buscar o livro' });
+            }
+
+            if (results.length === 0) {
+                return res.status(404).json({ error: 'Livro não encontrado' });
+            }
+
+            return res.json(results[0]);
+        }
+    );
+};
 
 const multer = require('multer');
 const { storage } = require('../cloudinary');
