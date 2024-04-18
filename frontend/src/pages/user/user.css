@@ -1,0 +1,12 @@
+.all-content{
+    background-color: rgb(0, 0, 0);
+    color: white
+}
+
+.img-user{
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    margin: 30px;
+
+}

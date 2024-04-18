@@ -1,0 +1,32 @@
+.imgAuthor {
+    max-width: 28%; 
+    height: 380px; 
+    margin-top: 5%; 
+    margin-left: 5%; 
+    margin-right: auto; 
+}
+
+.author-container {
+    max-width: 90%;
+}
+
+.author-details {
+    position: absolute;
+    top: 10%; 
+    left: 55%; 
+    transform: translateX(-50%); 
+    color: white;
+}
+
+#edit-author, #delete-author {
+    width: 100px;
+}
+
+.btn-adm form {
+    display: inline;
+    margin-right: 10px;
+}
+
+.btn-form {
+    margin-bottom: 30px; 
+}

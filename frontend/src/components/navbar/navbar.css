@@ -1,13 +1,11 @@
 .navbar {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background-color: #73a8f9;
-    z-index: 1000; /* Garante que a navbar esteja sempre acima do conteúdo */
 }
 
-/* Restante do seu CSS para .btn-entrar */
+
 .btn-entrar {
     background-color: #0066FF;
     border: none;

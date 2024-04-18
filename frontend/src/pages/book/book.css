@@ -1,0 +1,38 @@
+.imgBook {
+    max-width: 25%; 
+    height: auto; 
+    margin-top: 5%; 
+    margin-left: 5%; 
+    margin-right: auto; 
+}
+
+.book-container {
+    position: relative;
+    max-width: 100%;
+}
+
+.book-details {
+    position: absolute;
+    top: 15%; 
+    left: 55%; 
+    transform: translateX(-50%); 
+    color: white;
+}
+
+#edit, #delete {
+    width: 100px;
+}
+
+.btn-adm form {
+    display: inline;
+    margin-right: 10px;
+}
+
+.btn-form {
+    margin-bottom: 125px; 
+}
+
+.author-name{
+    text-decoration: none;
+    color: white;
+}

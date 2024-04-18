@@ -1,0 +1,33 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-title{
+    color: white;
+}
+
+.imgBook-edit{
+    max-width: 100%; 
+    height: 475px; 
+    margin-top: 5%;  
+}
+
+#btn-back , #btn-update{
+    width: 46%;
+    margin: 5px;
+}
+
+#description-book{
+    height: 125px;
+}
+
+#author-go{
+    text-decoration: none;
+}
+  
+
+#btn-update-book-img{
+    width: 100%;
+}
