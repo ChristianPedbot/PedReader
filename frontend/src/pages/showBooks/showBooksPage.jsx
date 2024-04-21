@@ -9,11 +9,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function ShowBookPage() {
   const [books, setBooks] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); 
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/books');
+        const response = await axios.get(`http://localhost:3000/books?page=${currentPage}`); 
         setBooks(response.data);
       } catch (error) {
         console.error('Erro ao buscar livros:', error);
@@ -21,14 +22,14 @@ function ShowBookPage() {
     };
 
     fetchBooks();
-  }, []);
+  }, [currentPage]); 
 
   return (
     <div>
       <Navbar />
       <Search />
       <Books books={books} />
-      <Pagination />
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <Footer />
     </div>
   );

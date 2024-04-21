@@ -2,20 +2,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar.jsx';
 import Footer from '../../components/footer/Footer.jsx';
-import Author from './Author.jsx';
 import EditAuthor from './EditAuthor.jsx';
 import AddAuthor from './AddAuthor.jsx';
 
-
-function ShowAuthorPage() {
-  return (
-    <div>
-      <Navbar />
-      <Author />
-      <Footer />
-    </div>
-  );
-}
 
 function ShowEditAuthor() {
     return (
@@ -39,12 +28,9 @@ function ShowAddAuthor() {
   
 
 
-export default function ShowAuthor() {
+export default function AuthorApp() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/authors" element={<ShowAuthorPage />} />
-      </Routes>
       <Routes>
         <Route path="/authors/edit" element={<ShowEditAuthor />} />
       </Routes>

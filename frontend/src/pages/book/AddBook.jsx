@@ -16,7 +16,7 @@ function AddBook({ authors }) {
           </div>
           <div className="mb-3">
             <label className="form-label" htmlFor="description">Description</label>
-            <textarea className="form-control" placeholder="book description..." type="text" id="description-book" name="description" required></textarea>
+            <textarea className="form-control" placeholder="Book Description" type="text" id="description-book" name="description" required></textarea>
             <div className="valid-feedback">
               Looks good
             </div>
@@ -55,7 +55,7 @@ function AddBook({ authors }) {
               {authors.map(author => (
                 <option key={author.id} value={author.id}>{author.name}</option>
               ))}
-            </select>
+            </select> 
             <label id='author-go' className='form-label' >Didn't find your author?<a href='author/add' ><b> Add it here</b></a></label>
           </div>
           <div className="container-img mb-3">

@@ -1,40 +1,30 @@
 import React from 'react';
 import "./pagination.css";
 
-function Pagination() {
+function Pagination({ currentPage, totalPages, setCurrentPage }) {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(
+      <li key={i} className={currentPage === i ? "active" : ""}>
+        <a href="#" onClick={() => setCurrentPage(i)}>{i}</a>
+      </li>
+    );
+  }
+
   return (
-
-    <div class="container">
-    <ul class="pagination">
-    <li>
-        <a href="#">Prev</a>
-    </li>
-    <li>
-        <a href="#">1</a>
-    </li>
-    <li class="active">
-        <a href="#">2</a>
-    </li>
-    <li>
-        <a href="#">3</a>
-    </li>
-    <li>
-        <a href="#">4</a>
-    </li>
-    <li>
-        <a href="#">5</a>
-    </li>
-    <li>
-        <a href="#">Next</a>
-    </li>
-    </ul>
+    <div className="container">
+      <ul className="pagination">
+        <li>
+          <a href="#" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Prev</a>
+        </li>
+        {pageNumbers}
+        <li>
+          <a href="#" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</a>
+        </li>
+      </ul>
     </div>
-
   );
 }
 
 export default Pagination;
-
-
-
-

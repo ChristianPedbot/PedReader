@@ -38,22 +38,12 @@ function BookPage() {
   );
 }
 
-function EditBookPage() {
-  return (
-    <div>
-      <Navbar />
-      <EditBook />
-      <Footer />
-    </div>
-  );
-}
 
 function ShowBook() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/books/:id" element={<BookPage />} />
-        <Route path="/books/:id/edit" element={<EditBookPage />} />
       </Routes>
     </BrowserRouter>
   );

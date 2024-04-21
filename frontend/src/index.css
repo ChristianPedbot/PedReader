@@ -46,7 +46,7 @@ body {
 
 .header {
   display: flex;
-  align-items: center; /* Para alinhar verticalmente */
+  align-items: center; 
 }
 
 .header img.logo,
