@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/books');
+const methodOverride = require('method-override');
+router.use(methodOverride('_method'));
 
 
-
-router.put('/books/edit/:id', bookController.editBook);
+router.put('/books/:id/edit', bookController.editBook);
 
 router.delete('/books/delete/:id', bookController.deleteBook);
 

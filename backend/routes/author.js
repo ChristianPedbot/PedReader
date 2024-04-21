@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const authorController = require('../controllers/authors');
+const methodOverride = require('method-override');
+router.use(methodOverride('_method'));
+
 
 
 

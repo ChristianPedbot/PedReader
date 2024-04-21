@@ -19,7 +19,7 @@ module.exports.editAuthors = (req, res) => {
 }
 
 module.exports.deleteAuthors = (req, res) => {
-    const authorId = req.params.id;''
+    const authorId = req.params.id;
 
     connection.query(
         'DELETE FROM authors WHERE id = ?',

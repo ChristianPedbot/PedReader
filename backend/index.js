@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
+const methodOverride = require('method-override');
 
 require('dotenv').config();
 
@@ -13,6 +14,7 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));
@@ -30,7 +32,7 @@ app.use('/', userRouter);
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 app.get('*', (req, res) => {
-  res.status(404).json({ error: 'Página não encontrada' });
+  res.status(404).json({ error: 'Page not found' });
 });
 
 

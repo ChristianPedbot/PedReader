@@ -2,20 +2,27 @@ const connection = require('../utils/db');
 
 module.exports.editBook = (req, res) => {
     const livroId = req.params.id;
-    const { title, description, availability, date, categorie_id, author_id } = req.body;
+    
+    const { title, description, availability, categorie_id, author_id } = req.body;
 
     connection.query(
-        'UPDATE books SET title = ?, description = ?, availability = ?, date = ?, categorie_id = ?, author_id = ? WHERE id = ?',
-        [title, description, availability, date, categorie_id, author_id, livroId],
-        (error) => {
+        'UPDATE books SET title = ?, description = ?, availability = ?,  categorie_id = ?, author_id = ? WHERE id = ?',
+        [title, description, availability, categorie_id, author_id, livroId],
+        (error, results) => {
             if (error) {
                 console.error('Erro ao editar o livro:', error);
+                return res.status(500).json({ error: 'Erro ao editar o livro' });
             }
-            
-            return res.send('Livro editado com sucesso');
+
+            if (results.affectedRows === 0) {
+                return res.status(404).json({ error: 'Livro não encontrado' });
+            }
+            return res.status(200).json({ message: 'Livro editado com sucesso' });
         }
     );
-}
+};
+
+
 
 module.exports.deleteBook = (req, res) => {
     const livroId = req.params.id;
@@ -34,13 +41,19 @@ module.exports.deleteBook = (req, res) => {
 }
 
 module.exports.books = (req, res) => {
-    connection.query('SELECT * FROM books', (error, results) => {
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const resultsPerPage = 20;
+    const offset = (page - 1) * resultsPerPage;
+
+    connection.query('SELECT * FROM books LIMIT ?, ?', [offset, resultsPerPage], (error, results) => {
         if (error) {
             console.error('Erro ao listar os livros:', error);
+            return res.status(500).json({ error: 'Erro ao listar os livros' });
         }
         res.json(results);
     });
-}
+};
+
 
 module.exports.getBookById = (req, res) => {
     const livroId = req.params.id;
