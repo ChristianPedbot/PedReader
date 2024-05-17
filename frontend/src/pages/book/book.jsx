@@ -49,6 +49,9 @@ function Book({ book }) {
     try {
       await api.post(`/locations/add`, { livroId: id, userId: userId });
       toast.success("Successful rental");
+      setTimeout(() => {
+        window.location.href = `/books`;
+      }, 2000);
     } catch (error) {
       toast.error("Error when performing rental!");
     }

@@ -76,9 +76,12 @@ export default function EditUser() {
 
     try {
       const response = await axios.put(`http://localhost:3000/users/edit/${userId}`, formDataToSend);
-      console.log('Usuário editado com sucesso:', response.data);
+      toast.success('Profile edited successfully!');
+      setTimeout(() => {
+        window.location.href = `/user/${userId}`;
+      }, 2000); 
     } catch (error) {
-      console.error('Erro ao editar o usuário:', error);
+      toast.error('Error editing user profile:', error);
     }
   };
   const defaultImageUrl = "https://res.cloudinary.com/dechfylvy/image/upload/v1715889366/user_vhvvtc.png";
