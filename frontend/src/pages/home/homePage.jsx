@@ -5,25 +5,24 @@ import Carousel from './Carousel.jsx';
 import Evaluated from './ Evaluated.jsx';
 import Genres from './Genres.jsx';
 import Footer from '../../components/footer/Footer.jsx';
+import ProtectedRoute from '../book/ProtectedRoute.jsx';
 
 function HomePage() {
   return (
     <div>
       <App />
       <Carousel />
-      <Evaluated />
       <Genres />
       <Footer />
     </div>
   );
 }
 
-
 export default function Home() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<ProtectedRoute element={<HomePage />} />} />
       </Routes>
     </BrowserRouter>
   );

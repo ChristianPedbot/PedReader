@@ -5,6 +5,15 @@
     background-color: #73a8f9;
 }
 
+.dropdown-menu{
+    background-color:  #73a8f9;
+
+}
+
+.dropdown-item:hover{
+    background-color: #5597fa;
+}
+
 
 .btn-entrar {
     background-color: #0066FF;
@@ -18,4 +27,32 @@
 
 .btn-entrar:hover {
     background-color: #004ec2;
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+    flex-grow: 1; 
+}
+
+#userNavItem {
+    margin-left: auto;
+    display: flex;
+    align-items: center; 
+}
+
+.img-navbar{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.name-navbar{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.hidden-nav{
+    color: #73a8f9;
 }

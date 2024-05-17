@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from '../../components/navbar/Navbar.jsx';
 import Footer from '../../components/footer/Footer.jsx';
 import Author from '../author/Author.jsx';
+import ProtectedRoute from '../book/ProtectedRoute.jsx';
 
 function ShowAuthorPage() {
     const { id } = useParams();
@@ -15,7 +16,6 @@ function ShowAuthorPage() {
           const authorResponse = await axios.get(`http://localhost:3000/authors/${id}`);
           setAuthor(authorResponse.data);
         } catch (error) {
-          console.error('Erro ao buscar autor:', error);
         }
       };
   
@@ -31,12 +31,11 @@ function ShowAuthorPage() {
     );
   }
   
-  
   function ShowAuthor() {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="/authors/:id" element={<ShowAuthorPage />} />
+          <Route path="/authors/:id" element={<ProtectedRoute element={<ShowAuthorPage />} />} />
         </Routes>
       </BrowserRouter>
     );

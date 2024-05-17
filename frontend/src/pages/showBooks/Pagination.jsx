@@ -1,26 +1,48 @@
 import React from 'react';
-import "./pagination.css";
+import './pagination.css';
 
 function Pagination({ currentPage, totalPages, setCurrentPage }) {
-  const pageNumbers = [];
+  const isFirstPage = currentPage === 1;
+  const isLastPage = currentPage === totalPages;
+  const shouldDisableNext = currentPage >= totalPages;
 
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(
-      <li key={i} className={currentPage === i ? "active" : ""}>
-        <a href="#" onClick={() => setCurrentPage(i)}>{i}</a>
-      </li>
-    );
-  }
+  const handlePrevClick = () => {
+    if (!isFirstPage) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (!isLastPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
+        <li key={i} className={currentPage === i ? 'active' : ''}>
+          <a href="#" onClick={() => setCurrentPage(i)}>{i}</a>
+        </li>
+      );
+    }
+    return pageNumbers;
+  };
 
   return (
     <div className="container">
       <ul className="pagination">
         <li>
-          <a href="#" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Prev</a>
+          <a href="#" onClick={handlePrevClick} disabled={isFirstPage}>
+            Prev
+          </a>
         </li>
-        {pageNumbers}
+        {renderPageNumbers()}
         <li>
-          <a href="#" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</a>
+          <a href="#" onClick={handleNextClick} disabled={isLastPage || shouldDisableNext}>
+            Next
+          </a>
         </li>
       </ul>
     </div>

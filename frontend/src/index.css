@@ -16,7 +16,7 @@ body {
 .img-index{
   width: 65vh;
   height: 60vh;
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .text-index-image{
@@ -74,3 +74,4 @@ body {
 
 }
 
+  

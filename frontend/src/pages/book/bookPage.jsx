@@ -1,10 +1,13 @@
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../../components/navbar/Navbar.jsx';
 import Footer from '../../components/footer/Footer.jsx';
 import Book from './book.jsx';
-import EditBook from './EditBook.jsx';
+import axiosInstance from '../../../axios/axios.js';
+import ProtectedRoute from './ProtectedRoute.jsx';
+
+
 
 function BookPage() {
   const { id } = useParams();
@@ -14,15 +17,14 @@ function BookPage() {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const bookResponse = await axios.get(`http://localhost:3000/book/${id}`);
+        const bookResponse = await axiosInstance.get(`/book/${id}`);
         setBook(bookResponse.data);
 
         const authorId = bookResponse.data.author_id;
 
-        const authorResponse = await axios.get(`http://localhost:3000/authors/${id}`);
+        const authorResponse = await axiosInstance.get(`/authors/${authorId}`);
         setAuthor(authorResponse.data);
       } catch (error) {
-        console.error('Erro ao buscar livro ou autor:', error);
       }
     };
 
@@ -38,12 +40,14 @@ function BookPage() {
   );
 }
 
-
 function ShowBook() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/books/:id" element={<BookPage />} />
+        <Route
+          path="/books/:id"
+          element={<ProtectedRoute element={<BookPage />} />}
+        />
       </Routes>
     </BrowserRouter>
   );

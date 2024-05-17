@@ -1,11 +1,62 @@
-import "./user.css"
+import React, { useState, useEffect } from 'react';
+import { logout, getUserIdFromToken } from "../../utils/localStorage";
+import axios from "axios";
+import UserBooks from "./UserBooks";
+import EditProfileButton from "../../components/buttons/editProfile";
+import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 function User() {
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    img: null
+  });
+
+  useEffect(() => {
+    const fetchUserInfoFromToken = async () => {
+      try {
+        const userId = getUserIdFromToken();
+        const response = await axios.get(`http://localhost:3000/users/get/${userId}`);
+        const userData = response.data;
+        setUserInfo(userData);
+      } catch (error) {
+        toast.error('Error getting user information:', error)
+      }
+    };
+
+    fetchUserInfoFromToken();
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    // Redirecionar para a página de login
+    window.location.href = '/login';
+  };
+
+  if (!userInfo) {
+    return <div>Loading...</div>;
+  }
+
+  // URL da imagem padrão
+  const defaultImageUrl = "https://res.cloudinary.com/dechfylvy/image/upload/v1715889366/user_vhvvtc.png";
+
   return (
-    <div className="all-content">
-        <img className="img-user" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+    <div className="text-white">
+      <div className="all-content">
+        <div className="row align-items-start">
+          <div className="col-md-3">
+            <img className="img-user" src={userInfo.img || defaultImageUrl} alt="" />
+          </div>
+          <div className="col-md-3">
+            <h1 className="name">Hello,<br />{userInfo.name}</h1>
+            <Link to={`/user/${userInfo.id}/edit`} reloadDocument><EditProfileButton /></Link>
+            <button className="btn btn-outline-danger m-3" onClick={handleLogout}>Logout</button>
+          </div>
+        </div>
       </div>
-    
+      <h1 className="my-book">My books</h1>
+      <UserBooks userId={userInfo.id} />
+    </div>
   );
 }
 

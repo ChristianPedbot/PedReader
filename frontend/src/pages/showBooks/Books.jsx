@@ -2,24 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import "./books.css";
 
-export default function Books({ books }) {
+export default function Books({ books , setCurrentPage}) {
 
   if (books.length === 0) {
-    return <p>Nenhum livro disponível.</p>;
+    setCurrentPage(1);
   }
 
   return (
+    <div className='container-card'>
     <div className="cards">
       {books.map(book => (
-        <div className="card" key={book.id}>
+        <div className={`card ${book.availability ? 'unavailable' : 'available'}`} key={book.id}>
           <Link to={`/books/${book.id}`} className="book-link" reloadDocument>
             <img src={book.img} alt={book.title} />
-            <p className="card-desc">
-              {book.title}<br />Rating: XXXXX <br /> {book.description}
+            <p className={`card-desc ${book.availability ? 'unavailable-desc' : 'available-desc'}`}>
+              <b>{book.title}</b><br /> {book.description}
             </p>
           </Link>
         </div>
       ))}
+    </div>
     </div>
   );
 }

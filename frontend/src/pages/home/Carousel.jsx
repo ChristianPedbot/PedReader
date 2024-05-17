@@ -11,13 +11,13 @@ const Carousel = () => {
       </div>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="d-block w-100" alt="First slide" />
+          <img src="https://res.cloudinary.com/dechfylvy/image/upload/v1714146548/SPECIAL_1_yb9zti.png" className="d-block w-100" alt="First slide" />
         </div>
         <div className="carousel-item">
-          <img src="https://images.unsplash.com/photo-1590598687530-581406de2262?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="d-block w-100" alt="Second slide" />
+          <img src="https://res.cloudinary.com/dechfylvy/image/upload/v1714147447/kids_bvfkvq.png" className="d-block w-100" alt="Second slide" />
         </div>
         <div className="carousel-item">
-          <img src="https://images.unsplash.com/photo-1465929639680-64ee080eb3ed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="d-block w-100" alt="Third slide" />
+          <img src="https://res.cloudinary.com/dechfylvy/image/upload/v1714148017/EDUC_q2u1ad.png" className="d-block w-100" alt="Third slide" />
         </div>
       </div>
       <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

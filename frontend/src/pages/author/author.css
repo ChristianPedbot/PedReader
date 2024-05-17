@@ -30,3 +30,28 @@
 .btn-form {
     margin-bottom: 30px; 
 }
+
+.author-div{
+    margin-top: 100PX;
+    display: flex;
+    justify-content: center; 
+}
+
+.card-author-body{
+    color: white;
+    padding: 10px;
+}
+
+.card-author-title{
+    font-size: 30px;
+}
+
+#delete {
+    border-radius: 50%;
+    color: red;
+    background-color: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 10px;
+    right: 10px; 
+}
+

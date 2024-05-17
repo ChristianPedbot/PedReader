@@ -10,7 +10,6 @@ function AuthorName({ authorId }) {
         const response = await axios.get(`http://localhost:3000/authors/${authorId}`);
         setAuthor(response.data);
       } catch (error) {
-        console.error('Erro ao buscar autor:', error);
       }
     };
 

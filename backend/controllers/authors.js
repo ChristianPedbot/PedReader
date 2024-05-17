@@ -1,22 +1,41 @@
 const connection = require('../utils/db');
+const multer = require('multer');
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
 
 module.exports.editAuthors = (req, res) => {
     const authorId = req.params.id;
-    const { name, img, biography } = req.body;
 
-    connection.query(
-        'UPDATE authors SET name = ?, img = ?, biography = ? WHERE id = ?',
-        [name, img, biography, authorId],
-        (error) => {
-            if (error) {
-                console.error('Erro ao editar o autor:', error);
-                return res.status(500).json({ error: 'Erro ao editar o autor' });
-            }
-            
-            return res.send('Autor editado com sucesso');
+    upload.single('img')(req, res, (err) => {
+        if (err) {
+            console.error('Error uploading image:', err);
+            return res.status(500).json({ error: 'Error uploading image' });
         }
-    );
-}
+
+        const { name, biography } = req.body;
+        let img = null;
+
+        if (req.file && req.file.path) {
+            img = req.file.path;
+        }
+
+        connection.query(
+            'UPDATE authors SET name = ?, biography = ?, img = ? WHERE id = ?',
+            [name, biography, img, authorId],
+            (error, results) => {
+                if (error) {
+                    console.error('Error editing author:', error);
+                    return res.status(500).json({ error: 'Error editing author' });
+                }
+
+                if (results.affectedRows === 0) {
+                    return res.status(404).json({ error: 'Author not found' });
+                }
+                return res.status(200).json({ message: 'Author edited successfully' });
+            }
+        );
+    });
+};
 
 module.exports.deleteAuthors = (req, res) => {
     const authorId = req.params.id;
@@ -26,11 +45,11 @@ module.exports.deleteAuthors = (req, res) => {
         [authorId],
         (error) => {
             if (error) {
-                console.error('Erro ao excluir o autor:', error);
-                return res.status(500).json({ error: 'Erro ao excluir o autor' });
+                console.error('Error deleting author:', error);
+                return res.status(500).json({ error: 'Error deleting author' });
             }
-            
-            return res.send(`Autor com o ID ${authorId} excluído com sucesso`);
+
+            return res.send(`Author with ID ${authorId} successfully deleted`);
         }
     );
 }
@@ -38,8 +57,8 @@ module.exports.deleteAuthors = (req, res) => {
 module.exports.getAuthors = (req, res) => {
     connection.query('SELECT * FROM authors', (error, results) => {
         if (error) {
-            console.error('Erro ao listar os autores:', error);
-            return res.status(500).json({ error: 'Erro ao listar os autores' });
+            console.error('Error listing authors:', error);
+            return res.status(500).json({ error: 'Error listing authors' });
         }
         res.json(results);
     });
@@ -47,18 +66,18 @@ module.exports.getAuthors = (req, res) => {
 
 exports.getAuthorById = (req, res) => {
     const authorId = req.params.id;
-    
+
     connection.query(
         'SELECT * FROM authors WHERE id = ?',
         [authorId],
         (error, results) => {
             if (error) {
-                console.error('Erro ao buscar o autor:', error);
-                return res.status(500).json({ error: 'Erro ao buscar o autor' });
+                console.error('Error when searching for the author:', error);
+                return res.status(500).json({ error: 'Error when searching for the author' });
             }
-            
+
             if (results.length === 0) {
-                return res.status(404).json({ error: 'Autor não encontrado' });
+                return res.status(404).json({ error: 'Author not found' });
             }
 
             const author = results[0];
@@ -67,23 +86,20 @@ exports.getAuthorById = (req, res) => {
     );
 };
 
-const multer = require('multer');
-const { storage } = require('../cloudinary');
-const upload = multer({ storage });
 
 module.exports.addAuthors = (req, res) => {
     upload.single('img')(req, res, (err) => {
         if (err) {
-            console.error('Erro ao fazer upload da imagem:', err);
-            return res.status(500).json({ error: 'Erro ao fazer upload da imagem' });
+            console.error('Error uploading image:', err);
+            return res.status(500).json({ error: 'Error uploading image' });
         }
-        
+
         const { name, biography } = req.body;
         const img = req.file ? req.file.path : null;
 
         if (!img) {
-            console.error('Nenhuma imagem foi enviada');
-            return res.status(400).json({ error: 'Nenhuma imagem foi enviada' });
+            console.error('No images were sent');
+            return res.status(400).json({ error: 'No images were sent' });
         }
 
         connection.query(
@@ -91,11 +107,11 @@ module.exports.addAuthors = (req, res) => {
             [name, img, biography],
             (error) => {
                 if (error) {
-                    console.error('Erro ao inserir o autor no banco de dados:', error);
-                    return res.status(500).json({ error: 'Erro ao inserir o autor no banco de dados' });
+                    console.error('Error inserting author into database:', error);
+                    return res.status(500).json({ error: 'Error inserting author into database' });
                 }
 
-                return res.send('Autor adicionado com sucesso');
+                return res.send('Author added successfully');
             }
         );
     });

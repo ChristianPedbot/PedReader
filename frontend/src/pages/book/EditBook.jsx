@@ -1,110 +1,151 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './editBook.css';
-import AuthorName from './AutName';
+import UpdateButton from '../../components/buttons/update';
+import { toast } from 'react-toastify';
 
 function EditBook({ book }) {
-
-  if (!book) {
-    return (
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    );
-  }
-
-  const { title, description, availability, genre, author_id, img } = book;
-
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    availability: '',
+    genre: '',
+    authorId: '',
+    img: null
+  });
 
   const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
+    if (book) {
+      const { title, description, availability, genre, author_id, img } = book;
+      setFormData({
+        title,
+        description,
+        availability,
+        genre,
+        authorId: author_id,
+        img
+      });
+    }
+  }, [book]);
 
+  useEffect(() => {
     const fetchAuthors = async () => {
       try {
         const response = await axios.get('http://localhost:3000/authors');
         setAuthors(response.data);
       } catch (error) {
-        console.error('Erro ao buscar autores:', error);
+        toast.error('Error when searching for authors');
       }
     };
 
     fetchAuthors();
   }, []);
 
+  const handleChange = (e) => {
+    if (e.target.name === 'img') {
+      setFormData({
+        ...formData,
+        img: e.target.files[0]
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+      });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('title', formData.title);
+    formDataToSend.append('description', formData.description);
+    formDataToSend.append('availability', formData.availability);
+    formDataToSend.append('genre', formData.genre);
+    formDataToSend.append('authorId', formData.authorId);
+
+    if (formData.img) {
+      formDataToSend.append('img', formData.img);
+    }
+
+    try {
+      const response = await axios.put(`http://localhost:3000/books/${book.id}/edit`, formDataToSend);
+      toast.success('Book successfully edited!', response.data);
+      setTimeout(() => {
+        window.location.href = `/books/${book.id}`;
+      }, 2500);
+    } catch (error) {
+      toast.error('Error when trying to edit the book.');
+    }
+  };
+
+
   return (
-    <div className="container">
-      <div className="row">
-        <h1 className="text-title">Edit Book</h1>
-        <div className="col-md-6">
-        <form action={`http://localhost:3000/books/${book.id}/edit?_method=PUT`} method="POST" noValidate className="validated-form" encType='multipart/form-data'>
+    <div className="container-edit">
+      <form onSubmit={handleSubmit} noValidate className="validated-form" encType='multipart/form-data'>
+        <div className="row">
+          <h1 className="text-title">Edit Book</h1>
+          <div className="col-md-6">
             <div className="mb-3">
               <label className="form-label" htmlFor="title">Title</label>
-              <input className="form-control" type="text" placeholder='Title...' id="title" name="title" defaultValue={title} required />
-              <div className="valid-feedback">
-                Looks good
-              </div>
+              <input className="form-control" type="text" placeholder='Title...' id="title" name="title" value={formData.title} onChange={handleChange} required />
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="description">Description</label>
-              <textarea className="form-control" placeholder='book description...' type="text" id="description-book" name="description" defaultValue={description} required></textarea>
-              <div className="valid-feedback">
-                Looks good
-              </div>
+              <textarea className="form-control" placeholder='Book description...' id="description" name="description" value={formData.description} onChange={handleChange} required></textarea>
             </div>
             <div className='mb-3'>
               <label className='form-label' htmlFor="availability">Availability:</label>
-              <select className='form-control' id="availability" name="availability" defaultValue={availability}>
-                <option value="1">available</option>
-                <option value="0">unavailable</option>
+              <select className='form-control' id="availability" name="availability" value={formData.availability} onChange={handleChange}>
+                <option value="0">available</option>
+                <option value="1">unavailable</option>
               </select>
             </div>
             <div className='mb-3'>
               <label className='form-label' htmlFor="genres">Genre:</label>
-              <select className='form-control' id="genres" name="categorie_id" defaultValue={genre}>
+              <select className='form-control' id="genres" name="genre" value={formData.genre} onChange={handleChange}>
                 <option value="14">Fiction</option>
                 <option value="15">Romance</option>
                 <option value="16">Horror</option>
                 <option value="17">Mystery</option>
-                <option value="18">Thriller</option>
+                <option value="18">Suspense</option>
                 <option value="19">Adventure</option>
                 <option value="20">Drama</option>
                 <option value="21">Comedy</option>
                 <option value="22">Poetry</option>
-                <option value="23">Didactics</option>
+                <option value="23">Educational</option>
                 <option value="24">Fantasy</option>
-                <option value="25">Kids</option>
+                <option value="25">Children</option>
               </select>
             </div>
             <div className='mb-3'>
-              <label className='form-label' htmlFor="name-author">Author:</label>
-              <select className='form-control' id="name-author" name="author_id" defaultValue={author_id}>
+              <label className='form-label' htmlFor="authorId">Author:</label>
+              <select className='form-control' id="authorId" name="authorId" value={formData.authorId} onChange={handleChange}>
                 {authors.map(author => (
                   <option key={author.id} value={author.id}>{author.name}</option>
                 ))}
               </select>
             </div>
-            <div className='mb-3'>
-              <label id='author-go' className='form-label' >Didn't find your author?<a href='#' ><b> Add it here</b></a></label>
+          </div>
+          <div className="col-md-6">
+            <div >
+              <label className='form-label' htmlFor="img">Image:</label>
+              {book && <img className='imgBook-edit' src={book.img} alt="" />}
+              <input type="file" className='form-control' id="img" name="img" onChange={handleChange} />
             </div>
-            <a className="btn btn-outline-primary" id="btn-back" href="/books/:id">Back to Book</a>
-            <button type="submit" id='btn-update' className="btn btn-success">Update Book</button>
-          </form>
-        </div>
-
-        <div className="col-md-6">
-          <label className="form-label" htmlFor="title">Change main image</label>
-          <div className="mb-3">
-            <input className="form-control" type="file" name="img" multiple/>
-            <img className='imgBook-edit mb-3' src={img} alt="" name="img" />
-            <form action="">
-              <button id='delete-book' className='btn btn-danger'>Delete Book</button>
-            </form>
           </div>
         </div>
-      </div>
+        <div className='btn-up'>
+          <UpdateButton />
+        </div>
+      </form>
     </div>
+
   );
 }
+
 
 export default EditBook;
