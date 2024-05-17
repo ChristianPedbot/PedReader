@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { isLoggedIn } from '../../utils/localStorage';
 
 function ProtectedRoute({ element, ...rest }) {
-  return isLoggedIn() ? element : window.location.href= "/login";
+  return isLoggedIn() ? element : window.location.href = "/login";
 }
 
 export default ProtectedRoute;

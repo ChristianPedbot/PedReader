@@ -25,8 +25,8 @@ function Login() {
             const { token } = response.data;
             saveTokenToLocalStorage(token);
             setTimeout(() => {
-                const userId = getUserIdFromToken(token); 
-                saveUserIdToLocalStorage(userId); 
+                const userId = getUserIdFromToken(token);
+                saveUserIdToLocalStorage(userId);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             }, 100);
             window.location.href = "/home"
@@ -43,7 +43,7 @@ function Login() {
                     {error && <div className="alert alert-danger">{error}</div>}
                     <div className="mb-3">
                         <label className="form-label">Email:</label>
-                        <input type="email" name="email" className="form-control"  placeholder="ex: email@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input type="email" name="email" className="form-control" placeholder="ex: email@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Senha:</label>

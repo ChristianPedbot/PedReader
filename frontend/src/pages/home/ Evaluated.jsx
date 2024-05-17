@@ -1,5 +1,5 @@
 import React from "react";
-import "./evaluated.css"; 
+import "./evaluated.css";
 
 const Evaluated = () => {
   return (

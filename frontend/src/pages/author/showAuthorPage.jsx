@@ -7,38 +7,38 @@ import Author from '../author/Author.jsx';
 import ProtectedRoute from '../book/ProtectedRoute.jsx';
 
 function ShowAuthorPage() {
-    const { id } = useParams();
-    const [author, setAuthor] = useState(null);
-  
-    useEffect(() => {
-      const fetchAuthor = async () => {
-        try {
-          const authorResponse = await axios.get(`http://localhost:3000/authors/${id}`);
-          setAuthor(authorResponse.data);
-        } catch (error) {
-        }
-      };
-  
-      fetchAuthor();
-    }, [id]);
-  
-    return (
-        <div>
-          <Navbar />
-          <Author author={author} />
-          <Footer />
-        </div>
-    );
-  }
-  
-  function ShowAuthor() {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/authors/:id" element={<ProtectedRoute element={<ShowAuthorPage />} />} />
-        </Routes>
-      </BrowserRouter>
-    );
-  }
-  
-  export default ShowAuthor;
+  const { id } = useParams();
+  const [author, setAuthor] = useState(null);
+
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        const authorResponse = await axios.get(`http://localhost:3000/authors/${id}`);
+        setAuthor(authorResponse.data);
+      } catch (error) {
+      }
+    };
+
+    fetchAuthor();
+  }, [id]);
+
+  return (
+    <div>
+      <Navbar />
+      <Author author={author} />
+      <Footer />
+    </div>
+  );
+}
+
+function ShowAuthor() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/authors/:id" element={<ProtectedRoute element={<ShowAuthorPage />} />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default ShowAuthor;

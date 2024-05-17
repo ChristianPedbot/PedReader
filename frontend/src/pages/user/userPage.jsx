@@ -40,8 +40,8 @@ function LoginApp() {
 }
 
 
-function UserEditApp(){
-  return(
+function UserEditApp() {
+  return (
     <div>
       <Navbar />
       <EditUser />
@@ -56,7 +56,7 @@ export default function ShowUser() {
       <div>
         <Routes>
           <Route path="/user/:id" element={<ProtectedRouteUser element={<Users />} />} />
-          <Route path='/user/:id/edit' element={<ProtectedRouteUser element={<UserEditApp />}/>} />
+          <Route path='/user/:id/edit' element={<ProtectedRouteUser element={<UserEditApp />} />} />
           <Route path="/register" element={<RegisterApp />} />
           <Route path="/login" element={<LoginApp />} />
         </Routes>

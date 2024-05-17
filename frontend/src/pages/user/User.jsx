@@ -29,7 +29,6 @@ function User() {
 
   const handleLogout = () => {
     logout();
-    // Redirecionar para a página de login
     window.location.href = '/login';
   };
 
@@ -37,7 +36,6 @@ function User() {
     return <div>Loading...</div>;
   }
 
-  // URL da imagem padrão
   const defaultImageUrl = "https://res.cloudinary.com/dechfylvy/image/upload/v1715889366/user_vhvvtc.png";
 
   return (

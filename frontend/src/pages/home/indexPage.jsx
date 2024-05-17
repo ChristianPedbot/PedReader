@@ -8,9 +8,9 @@ import Index from './index.jsx';
 function IndexPage() {
   return (
     <div>
-        <Navbar />
-        <Index />
-        <Footer />
+      <Navbar />
+      <Index />
+      <Footer />
     </div>
   );
 }

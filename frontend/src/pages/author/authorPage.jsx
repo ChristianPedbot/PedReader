@@ -7,15 +7,15 @@ import AddAuthor from './AddAuthor.jsx';
 import ProtectedRouteAdmin from '../book/AdminProtectedRoute.jsx';
 
 function ShowEditAuthor() {
-    return (
-      <div>
-        <Navbar />
-        <EditAuthor />
-        <Footer />
-      </div>
-    );
-  }
-  
+  return (
+    <div>
+      <Navbar />
+      <EditAuthor />
+      <Footer />
+    </div>
+  );
+}
+
 function ShowAddAuthor() {
   return (
     <div>
@@ -25,7 +25,7 @@ function ShowAddAuthor() {
     </div>
   );
 }
-  
+
 export default function AuthorApp() {
   return (
     <BrowserRouter>

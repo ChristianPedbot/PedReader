@@ -27,7 +27,7 @@ export default function EditUser() {
         const response = await axios.get(`http://localhost:3000/users/get/${userId}`);
         const userData = response.data;
         setUserInfo(userData);
-        setFormData(userData); 
+        setFormData(userData);
       } catch (error) {
         toast.error('Error getting user information:', error);
       }
@@ -79,7 +79,7 @@ export default function EditUser() {
       toast.success('Profile edited successfully!');
       setTimeout(() => {
         window.location.href = `/user/${userId}`;
-      }, 2000); 
+      }, 2000);
     } catch (error) {
       toast.error('Error editing user profile:', error);
     }
@@ -115,7 +115,7 @@ export default function EditUser() {
               </div>
               <div className="mb-3">
                 <label className="form-label" htmlFor="email">Email</label>
-                <input className="form-control" type="email" id="email" name="email" value={formData.email } onChange={handleChange} required />
+                <input className="form-control" type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
                 <div className="valid-feedback">
                   Looks good
                 </div>

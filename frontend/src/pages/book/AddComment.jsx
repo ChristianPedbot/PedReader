@@ -38,7 +38,7 @@ export default function AddComment({ bookId, userId }) {
             <div id='comment-add' className="cardt">
                 <form onSubmit={handleSubmit}>
                     <label id='label-add-comment' className='label-control mb-3 text-white'>Add Comment</label>
-                    <input id='input-comment' className='form-control mb-3' type='text' name='comment' value={comment} onChange={handleChange}/>
+                    <input id='input-comment' className='form-control mb-3' type='text' name='comment' value={comment} onChange={handleChange} />
                     <input type='hidden' name='livroId' value={bookId} />
                     <input type='hidden' name='userId' value={userId} />
                     <button id='send-comment' type='submit' className='btn btn-success'>Send</button>

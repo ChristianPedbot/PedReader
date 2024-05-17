@@ -1,9 +1,9 @@
 .imgAuthor {
-    max-width: 28%; 
-    height: 380px; 
-    margin-top: 5%; 
-    margin-left: 5%; 
-    margin-right: auto; 
+    max-width: 28%;
+    height: 380px;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: auto;
 }
 
 .author-container {
@@ -12,13 +12,14 @@
 
 .author-details {
     position: absolute;
-    top: 10%; 
-    left: 55%; 
-    transform: translateX(-50%); 
+    top: 10%;
+    left: 55%;
+    transform: translateX(-50%);
     color: white;
 }
 
-#edit-author, #delete-author {
+#edit-author,
+#delete-author {
     width: 100px;
 }
 
@@ -28,21 +29,21 @@
 }
 
 .btn-form {
-    margin-bottom: 30px; 
+    margin-bottom: 30px;
 }
 
-.author-div{
+.author-div {
     margin-top: 100PX;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
 }
 
-.card-author-body{
+.card-author-body {
     color: white;
     padding: 10px;
 }
 
-.card-author-title{
+.card-author-title {
     font-size: 30px;
 }
 
@@ -52,6 +53,5 @@
     background-color: rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 10px;
-    right: 10px; 
+    right: 10px;
 }
-

@@ -32,12 +32,12 @@ function AddBook({ authors }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     const formDataToSend = new FormData();
     for (const key in formData) {
       formDataToSend.append(key, formData[key]);
     }
-  
+
     try {
       toast.info("Adding book...");
       await axios.post('http://localhost:3000/books/add', formDataToSend);
@@ -49,7 +49,7 @@ function AddBook({ authors }) {
       toast.error('Error adding book. Please try again.');
     }
   };
-  
+
   return (
     <div className="row text-white">
       <h1 className="text-center text-white mt-5">New Book</h1>
@@ -107,7 +107,7 @@ function AddBook({ authors }) {
           </div>
 
           <div className="container-img mb-3">
-          <label className="form-label" htmlFor="name-author">Image:</label>
+            <label className="form-label" htmlFor="name-author">Image:</label>
             <input className="form-control" type="file" name="img" onChange={handleFileChange} multiple />
           </div>
           <AddBookButton />

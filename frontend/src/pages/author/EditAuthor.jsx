@@ -33,16 +33,16 @@ function EditAuthor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
     formData.append('name', author.name);
     formData.append('biography', author.biography);
-    formData.append('img', e.target.elements.img.files[0]); 
-  
+    formData.append('img', e.target.elements.img.files[0]);
+
     try {
       await axios.put(`http://localhost:3000/authors/edit/${id}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', 
+          'Content-Type': 'multipart/form-data',
         },
       });
       toast.success('Author successfully edited!');
@@ -53,40 +53,40 @@ function EditAuthor() {
       toast.error('Error when trying to edit the author.');
     }
   };
-  
+
 
   return (
-<div className="container-edit">
-<form onSubmit={handleSubmit} noValidate className="validated-form" encType="multipart/form-data">
+    <div className="container-edit">
+      <form onSubmit={handleSubmit} noValidate className="validated-form" encType="multipart/form-data">
 
-    <div className="row">
-      <h1 className="text-title">Edit Author</h1>
-      <center><img className="imgAuthor-edit" src={author.img} alt="" /></center>    
-      <div className="col-md-12">
-        <div className="mb-3">
-          <label className="form-label" htmlFor="name">Name</label>
-          <input className="form-control" type="text" id="name" name="name" value={author.name} onChange={handleInputChange} required />
-          <div className="valid-feedback">
-            Looks good
+        <div className="row">
+          <h1 className="text-title">Edit Author</h1>
+          <center><img className="imgAuthor-edit" src={author.img} alt="" /></center>
+          <div className="col-md-12">
+            <div className="mb-3">
+              <label className="form-label" htmlFor="name">Name</label>
+              <input className="form-control" type="text" id="name" name="name" value={author.name} onChange={handleInputChange} required />
+              <div className="valid-feedback">
+                Looks good
+              </div>
+            </div>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="biography">Biography</label>
+              <textarea className="form-control" id="biography" name="biography" value={author.biography} onChange={handleInputChange} required></textarea>
+              <div className="valid-feedback">
+                Looks good
+              </div>
+            </div>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="img">Change main image</label>
+              <input className="form-control" type="file" name="img" multiple />
+            </div>
           </div>
         </div>
-        <div className="mb-3">
-          <label className="form-label" htmlFor="biography">Biography</label>
-          <textarea className="form-control" id="biography" name="biography" value={author.biography} onChange={handleInputChange} required></textarea>
-          <div className="valid-feedback">
-            Looks good
-          </div>
-        </div>
-        <div className="mb-3">
-          <label className="form-label" htmlFor="img">Change main image</label>
-          <input className="form-control" type="file" name="img" multiple />
-        </div>
-      </div>
+        <BackButton />
+        <UpdateButton />
+      </form>
     </div>
-    <BackButton />
-    <UpdateButton />
-  </form>
-</div>
 
 
   );

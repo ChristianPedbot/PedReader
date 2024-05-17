@@ -9,18 +9,18 @@ const ProtectedRouteUser = ({ element }) => {
 
     useEffect(() => {
         const fetchUserId = async () => {
-          try {
-            const userIdFromToken = await getUserIdFromToken();
-            console.log('userIdFromToken:', userIdFromToken);
-            setUserIdFromToken(String(userIdFromToken)); // Convertendo para string
-            setLoading(false);
-          } catch (error) {
-            console.error('Error fetching userId:', error);
-            setLoading(false);
-          }
+            try {
+                const userIdFromToken = await getUserIdFromToken();
+                console.log('userIdFromToken:', userIdFromToken);
+                setUserIdFromToken(String(userIdFromToken)); 
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching userId:', error);
+                setLoading(false);
+            }
         };
         fetchUserId();
-      }, []);
+    }, []);
 
     if (loading || userIdFromToken === null) {
         return <div>Loading...</div>;

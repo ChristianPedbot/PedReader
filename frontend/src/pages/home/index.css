@@ -1,22 +1,22 @@
-#index-img{
+#index-img {
     width: 100%;
-    height: auto; 
+    height: auto;
 }
 
-.container-index{
+.container-index {
     padding: 10px;
     height: 500px;
-    width: auto;   
+    width: auto;
     position: relative;
     left: 35%;
 
 }
 
-#image-index{
+#image-index {
     margin-left: 30px;
 }
 
-.div-index{
+.div-index {
     margin-bottom: 300px;
     margin-top: 150px;
 }
@@ -32,4 +32,4 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-thumb {
     background: #2e63b3;
-  }
+}

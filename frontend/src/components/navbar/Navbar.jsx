@@ -48,19 +48,19 @@ export default function Navbar() {
                     <a className="nav-link active" aria-current="page" href="/books">Books</a>
                   </li>
                   <span className={userInfo.isAdmin != null ? 'hidden-nav' : ''}>
-                  {userInfo.isAdmin && (
-                    <li className="nav-item dropdown">
-                      <a className="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Adm Options
-                      </a>
-                      <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="/book/add">New book</a></li>
-                        <li><a className="dropdown-item" href="/authors/add">New author</a></li>
-                        <li><hr className="dropdown-divider" /></li>
-                        <li><a className="dropdown-item" onClick={handleLogout}><b>Logout</b></a></li>
-                      </ul>
-                    </li>
-                  )}
+                    {userInfo.isAdmin && (
+                      <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Adm Options
+                        </a>
+                        <ul className="dropdown-menu">
+                          <li><a className="dropdown-item" href="/book/add">New book</a></li>
+                          <li><a className="dropdown-item" href="/authors/add">New author</a></li>
+                          <li><hr className="dropdown-divider" /></li>
+                          <li><a className="dropdown-item" onClick={handleLogout}><b>Logout</b></a></li>
+                        </ul>
+                      </li>
+                    )}
                   </span>
                   <li id="userNavItem" className='nav-link'>
                     <a href={userInfo.url}>{userInfo.url}</a>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './modalBook.css';
-import api from '../../../axios/axios'; 
+import api from '../../../axios/axios';
 
 export default function ModalBook({ bookId }) {
   const [returnDate, setReturnDate] = useState(null);
@@ -17,7 +17,7 @@ export default function ModalBook({ bookId }) {
       } catch (error) {
       }
     };
-  
+
     fetchReturnDate();
   }, [bookId]);
 
@@ -28,7 +28,7 @@ export default function ModalBook({ bookId }) {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <img className='modal-image' src="https://res.cloudinary.com/dechfylvy/image/upload/v1714756895/Firefly_fa%C3%A7a_um_robo_com_detalhes_em_azul_triste_pois_nao_conseguiu_seu_livro_favorito_93466_xwjqoh.jpg" alt=""/>
+              <img className='modal-image' src="https://res.cloudinary.com/dechfylvy/image/upload/v1714756895/Firefly_fa%C3%A7a_um_robo_com_detalhes_em_azul_triste_pois_nao_conseguiu_seu_livro_favorito_93466_xwjqoh.jpg" alt="" />
             </div>
             <div className="modal-body">
               {error ? (

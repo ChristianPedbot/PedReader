@@ -10,18 +10,18 @@ export default function BooksByGenres({ books, setCurrentPage }) {
 
   return (
     <div className='container-card'>
-    <div className="cards">
-      {books.map(book => (
-        <div className={`card ${book.availability ? 'unavailable' : 'available'}`} key={book.id}>
-          <Link to={`/books/${book.id}`} className="book-link" reloadDocument>
-            <img src={book.img} alt={book.title} />
-            <p className={`card-desc ${book.availability ? 'unavailable-desc' : 'available-desc'}`}>
-              {book.title}<br />Rating: {book.rating} <br /> {book.description}
-            </p>
-          </Link>
-        </div>
-      ))}
-    </div>
+      <div className="cards">
+        {books.map(book => (
+          <div className={`card ${book.availability ? 'unavailable' : 'available'}`} key={book.id}>
+            <Link to={`/books/${book.id}`} className="book-link" reloadDocument>
+              <img src={book.img} alt={book.title} />
+              <p className={`card-desc ${book.availability ? 'unavailable-desc' : 'available-desc'}`}>
+                {book.title}<br />Rating: {book.rating} <br /> {book.description}
+              </p>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
