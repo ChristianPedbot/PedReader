@@ -1,8 +1,10 @@
-version: '3'
+version: '3.8'
+
 services:
   node:
     build:
-      dockerfile: ./backend/Dockerfile
+      context: ./backend 
+      dockerfile: Dockerfile 
     container_name: library-backend
     ports:
       - "3000:3000"
@@ -16,7 +18,8 @@ services:
 
   react:
     build:
-      dockerfile: ./frontend/Dockerfile
+      context: ./frontend  
+      dockerfile: Dockerfile  
     container_name: library-frontend
     ports:
       - "8000:8000"
@@ -29,7 +32,7 @@ services:
     image: mysql:latest
     container_name: mysql
     ports:
-      - "3307:3306" 
+      - "3307:3306"
     volumes:
       - mysqldb:/var/lib/mysql
     environment:
