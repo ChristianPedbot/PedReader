@@ -80,12 +80,11 @@ module.exports.addUsers = (req, res) => {
         return res.status(500).json({ error: 'Error creating password hash' });
       }
   
-      // Obtenha a data atual
       const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
   
       connection.query(
         'INSERT INTO users (name, email, password, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)',
-        [name, email, hashedPassword, currentDate, currentDate], // Passando currentDate para ambos createdAt e updatedAt
+        [name, email, hashedPassword, currentDate, currentDate], 
         (insertError) => {
           if (insertError) {
             console.error('Error inserting user into database:', insertError);

@@ -54,7 +54,7 @@ const bcrypt = require('bcrypt');
     const adminUser = await User.findOne({ where: { isAdmin: true } });
 
     if (!adminUser) {
-      const hashedPassword = await bcrypt.hash('admin', 10); // Gera o hash da senha 'admin'
+      const hashedPassword = await bcrypt.hash('admin', 10); 
 
       await User.create({
         name: 'Admin',
