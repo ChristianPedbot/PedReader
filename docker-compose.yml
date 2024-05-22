@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.1'
 
 services:
   node:
@@ -6,55 +6,70 @@ services:
       context: ./backend 
       dockerfile: Dockerfile 
     container_name: library-backend
+    restart: always
     ports:
-      - "3000:3000"
+      - 3000:3000
     volumes:
       - ./backend:/usr/src/app
+    logging:
+      driver: "json-file"
     networks:
-      - network-lib
+      - net-lib
     depends_on:
-      - mysql
-      - phpmyadmin
-
+      mysql:
+        condition: service_healthy  
   react:
     build:
       context: ./frontend  
       dockerfile: Dockerfile  
     container_name: library-frontend
+    restart: always
     ports:
-      - "8000:8000"
+      - 8000:8000
     volumes:
       - ./frontend:/usr/src/app
+    logging:
+      driver: "json-file"
     networks:
-      - network-lib
+      - net-lib
 
   mysql:
-    image: mysql:latest
+    image: mysql:5.7
     container_name: mysql
+    restart: always
     ports:
       - "3307:3306"
     volumes:
       - mysqldb:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "root123"
-      MYSQL_DATABASE: "library"
-      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: library
     networks:
-      - network-lib
+      - net-lib
+    healthcheck:
+      test: '/usr/bin/mysql --user=root --password=root123 --execute "SHOW DATABASES;"'
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   phpmyadmin:
     image: phpmyadmin
     container_name: phpmyadmin
+    restart: always
     environment:
       PMA_HOST: mysql
       PMA_ARBITRARY: "1"
     ports:
-      - "8080:80"
+      - "8080:80" 
     networks:
-      - network-lib
+      - net-lib
 
 networks:
-  network-lib:
+  net-lib:
+    name: net-lib
 
 volumes:
   mysqldb:
+    name: mysqldb
+
+

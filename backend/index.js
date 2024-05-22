@@ -44,27 +44,30 @@ app.get('*', (req, res) => {
 
 
 const sequelize = require('./utils/configSequelizer');
-const User = require('./utils/sequalize');
+const User = require('./utils/sequelize');
+const bcrypt = require('bcrypt');
 
 (async () => {
   try {
-    await sequelize.sync(); 
+    await sequelize.sync();
 
     const adminUser = await User.findOne({ where: { isAdmin: true } });
 
     if (!adminUser) {
+      const hashedPassword = await bcrypt.hash('admin', 10); // Gera o hash da senha 'admin'
+
       await User.create({
         name: 'Admin',
         email: 'admin@example.com',
         isAdmin: true,
-        password: 'admin', 
+        password: hashedPassword, 
         telephone: '123456789',
         address: 'Admin Address',
         city: 'Admin City',
         state: 'SP',
         img: 'https://images.unsplash.com/photo-1588534331122-77ac46322dd2?q=80&w=1879&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
       });
-      console.log('Administrator user created successfully! Your passoword is: admin (change your password as soon as possible)');
+      console.log('Administrator user created successfully! Your password is: admin )');
     } else {
       console.log('There is already an administrator user in the database!');
     }

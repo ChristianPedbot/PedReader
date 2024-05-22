@@ -72,32 +72,33 @@ module.exports.users = (req, res) => {
 
 
 module.exports.addUsers = (req, res) => {
-
-
     const { name, email, password } = req.body;
-
-
+  
     bcrypt.hash(password, 10, (hashError, hashedPassword) => {
-        if (hashError) {
-            console.error('Error creating password hash:', hashError);
-            return res.status(500).json({ error: 'Error creating password hash' });
+      if (hashError) {
+        console.error('Error creating password hash:', hashError);
+        return res.status(500).json({ error: 'Error creating password hash' });
+      }
+  
+      // Obtenha a data atual
+      const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  
+      connection.query(
+        'INSERT INTO users (name, email, password, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)',
+        [name, email, hashedPassword, currentDate, currentDate], // Passando currentDate para ambos createdAt e updatedAt
+        (insertError) => {
+          if (insertError) {
+            console.error('Error inserting user into database:', insertError);
+            return res.status(500).json({ error: 'Error inserting user into database' });
+          }
+  
+          return res.send('User added successfully');
         }
-
-        connection.query(
-            'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-            [name, email, hashedPassword],
-            (insertError) => {
-                if (insertError) {
-                    console.error('Error inserting user into database:', insertError);
-                    return res.status(500).json({ error: 'Error inserting user into database' });
-                }
-
-                return res.send('User added successfully');
-            }
-        );
+      );
     });
-};
-
+  };
+  
+  
 
 
 module.exports.loginUser = (req, res) => {
